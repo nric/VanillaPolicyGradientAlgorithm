@@ -16,4 +16,3 @@ to https://github.com/breeko/Simple-Reinforcement-Learning-with-Tensorflow/blob/
 It is written and run in Visual Studio Code using Ipykernel. 
 
 Todo: The Entropy bonus has an issue (gets too large) and is commented out in this version
-"""
