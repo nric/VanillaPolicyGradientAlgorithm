@@ -13,5 +13,7 @@ While pretty rudementary, it has some enhancements to make it more effektive:
 This is part of the course Move37 Chapter 8.2 but rewritten to Tensorflow/Keras. More credits go
 to https://github.com/breeko/Simple-Reinforcement-Learning-with-Tensorflow/blob/master/Part%202%20-%20Policy-based%20Agents%20with%20Keras.ipynb
 
+It is written and run in Visual Studio Code using Ipykernel. 
+
 Todo: The Entropy bonus has an issue (gets too large) and is commented out in this version
 """
