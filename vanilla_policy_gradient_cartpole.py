@@ -23,7 +23,7 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 
 #%%
-#------------DEFINE AGNET CLASS AND FUCTIONS--------------
+#------------Define Agent and Functions--------------
 class PG_Agent(object):
     def __init__(self,input_dim,output_dim,hidden_dims=[32,32]):
         self.input_shape = input_dim
@@ -39,6 +39,14 @@ class PG_Agent(object):
   
         
     def _build_model(self):
+        """Defines self.model_train and self.model_predict.
+        most significant here is the self defined loss function. See Policy Gradient 
+        algorithm, for example here:https://medium.com/@jonathan_hui/rl-policy-gradients-explained-9b13b688b146
+        The reason to set two models is because the train models requires the advantages as inputs.
+        It would not make intuative sense to give advanteages just for prediction even though 
+        the advantages are only used in the loss function not in the layers definiton. 
+
+        """
         #the main input for the NN
         model_input = tf.keras.layers.Input(shape = self.input_shape,name="input_X")
         #dont get confused with the advantage layer. This is important for the input
@@ -79,6 +87,13 @@ class PG_Agent(object):
     
 
     def calc_discounted_rewards(self,reward_lst):
+        """function to calc dicounted rewards.
+        Function gets called outside agent class. 
+        Params:
+            :reward_lst: 1d array/list of rewards and addes them up with the discount factor gamma each step.
+        Returns
+            Numpy array 1d with discounted reward for each reward position
+        """
         #Q(k,t) = Sigma_i(gamma*reward_i) with t=step and k=episode
         prev_val = 0
         out = []
@@ -174,10 +189,11 @@ CYCLES = 1000
 EPISODE_BATCH_SIZE = 50
 RENDER_EVERY_N = 10 #render every Nth episode
 
-
+#Create Env and Agent instances
 env = gym.make("CartPole-v0")
 agent = PG_Agent(env.observation_space.shape, env.action_space.n, hidden_dims=[32, 32])
 
+#Main Loop. #Todo: add plot and save routine.
 for episode in range(CYCLES):
     avg_reward = run_n_episode(
         env,
